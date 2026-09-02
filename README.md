@@ -1,3 +1,36 @@
+# ⚽ Arsenal FC – Premier League Player Performance Analysis
+
+## 📌 Project Overview
+
+This project presents an exploratory data analysis (EDA) of Arsenal FC's Premier League player and match performance data using **Python, Pandas, NumPy, Matplotlib, and Seaborn**.
+
+The project focuses on analyzing player performance, attacking and defensive contributions, shooting efficiency, discipline, match-week performance, home vs away performance, attendance, and other statistical aspects of Arsenal's Premier League campaign.
+
+The analysis is performed using a dataset containing **585 records and 39 columns**, covering player-level and match-level statistics.
+
+---
+
+## 🎯 Project Objectives
+
+The main objectives of this project are to:
+
+- Explore and understand the Arsenal FC dataset
+- Check data quality and identify potential issues
+- Analyze top goal scorers and assist providers
+- Evaluate player goal contributions
+- Identify the most-used players
+- Analyze shooting performance and shooting accuracy
+- Calculate goals per 90 minutes
+- Evaluate defensive contributions
+- Analyze player discipline
+- Compare performance across different positions
+- Analyze performance by match week
+- Compare player performance in home and away matches
+- Analyze match attendance
+- Create a custom player performance score
+- Identify potentially underrated players
+- Explore correlations between numerical variables
+- Build a statistical Arsenal Dream XI
 ## 🐍 Python Libraries
 
 ```python
@@ -620,30 +653,6 @@ Then run the cells sequentially.
 
 ---
 
-# 📌 Project Objectives
-
-The main objectives of this project are:
-
-- Analyze Arsenal FC player performance.
-- Identify top goal scorers.
-- Identify top assist providers.
-- Measure goal contributions.
-- Analyze player playing time.
-- Evaluate shooting performance.
-- Calculate shooting accuracy.
-- Calculate goals per 90 minutes.
-- Analyze defensive contributions.
-- Analyze player discipline.
-- Compare home and away performance.
-- Analyze match-week performance.
-- Analyze attendance patterns.
-- Develop a custom player performance score.
-- Identify potentially underrated players.
-- Analyze statistical correlations.
-- Build a statistical Dream XI.
-
----
-
 # 🧠 Skills Demonstrated
 
 Through this project, the following practical skills were developed:
@@ -721,8 +730,8 @@ Aspiring Data Analyst | Python | SQL | Excel | Power BI | Tableau
 
 # 📬 Connect With Me
 
-- **GitHub:** [YOUR_GITHUB_PROFILE_LINK](https://github.com/nurhossainjoy)
-- **LinkedIn:** [YOUR_LINKEDIN_PROFILE_LINK](https://www.linkedin.com/in/md-nur-hossain-joy-0b0bb9190/)
+- **GitHub:** [MD NUR HOSSAIN JOY](https://github.com/nurhossainjoy)
+- **LinkedIn:** [MD NUR HOSSAIN JOY](https://www.linkedin.com/in/md-nur-hossain-joy-0b0bb9190/)
 
 ---
 
