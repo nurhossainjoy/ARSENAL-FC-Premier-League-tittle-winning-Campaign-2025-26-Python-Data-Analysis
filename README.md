@@ -1,356 +1,320 @@
-# ⚽ Arsenal FC Premier League – Player Performance Analysis
+## 🐍 Python Libraries
 
-
----
-
-## 📌 Project Overview
-
-This project is an exploratory data analysis (EDA) of **Arsenal FC's Premier League player and match performance data** using Python.
-
-The main purpose of this project is to analyze player performance from different perspectives, including attacking performance, shooting efficiency, defensive contribution, discipline, playing time, match-week performance, home vs away performance, attendance, player performance scoring, and statistical player evaluation.
-
-The complete analysis was performed using **Python and Pandas in Jupyter Notebook**.
-
-The project contains multiple analytical questions, starting from basic dataset exploration and gradually moving toward more advanced performance analysis.
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
 
 ---
 
-# 🎯 Project Objectives
+## 📁 Dataset Information
 
-The main objectives of this project are:
+The dataset contains Premier League match-by-match performance statistics of Arsenal FC players.
 
-- Understand the structure of the Arsenal FC dataset
-- Explore player and match statistics
-- Perform data quality checks
-- Identify the top goal scorers
-- Identify the top assist providers
-- Analyze player positions
-- Calculate goal contribution
-- Identify the most-used players
-- Analyze shooting performance
-- Calculate shooting accuracy
-- Calculate goals per 90 minutes
-- Analyze defensive contribution
-- Analyze player discipline
-- Analyze position-wise performance
-- Analyze performance by match week
-- Compare home and away performance
-- Analyze match attendance
-- Create a custom player performance score
-- Identify potentially underrated players
-- Perform correlation analysis
-- Create a statistical Arsenal Dream XI
+### Dataset Details
 
----
+- **Total Records:** 585
+- **Total Columns:** 39
+- **File Name:** `Arsenal.csv`
+- **Format:** CSV
+- **Analysis Tool:** Python / Pandas
 
-# 🛠️ Technologies Used
+### 📌 Important Columns
 
-The following technologies and Python libraries were used in this project:
-
-### Programming Language
-
-- Python
-
-### Libraries
-
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-
-### Development Environment
-
-- Jupyter Notebook
+| Column | Description |
+|---|---|
+| `Player` | Name of the Arsenal player |
+| `Position` | Player's playing position |
+| `Goals` | Goals scored |
+| `Assists` | Assists provided |
+| `Shots` | Total shots attempted |
+| `Shots_On_Target` | Shots that were on target |
+| `Tackles_Won` | Successful tackles |
+| `Interceptions` | Number of interceptions |
+| `Yellow_Cards` | Yellow cards received |
+| `Red_Cards` | Red cards received |
+| `Fouls_Committed` | Fouls committed |
+| `Minutes` | Minutes played |
+| `Match_Week` | Premier League match week |
+| `Home_Team` | Home team |
+| `Away_Team` | Away team |
+| `Venue` | Match venue |
+| `Attendance` | Match attendance |
 
 ---
 
-# 📚 Python Libraries
+## 🔍 Data Loading
 
-#📂 Dataset Information
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-The project uses an Arsenal FC Premier League player and match statistics dataset.
+data = pd.read_csv("Arsenal.csv")
+```
 
-The dataset contains 585 records and 39 columns.
+---
 
-The dataset includes both player-level statistics and match-level information.
+## 📊 Dataset Overview
 
-#📊 Dataset Features
+The first step of the analysis is to understand the structure of the dataset.
 
-Some of the important columns used in the analysis are:
+```python
+data.shape
+```
 
-Column	Description
-Player	Name of the player
-Position	Player's playing position
-Minutes	Total minutes played
-Goals	Goals scored
-Assists	Assists provided
-Shots	Total shots
-Shots_On_Target	Shots on target
-Tackles_Won	Successful tackles
-Interceptions	Number of interceptions
-Yellow_Cards	Yellow cards received
-Red_Cards	Red cards received
-Fouls_Committed	Fouls committed
-Match_Week	Premier League match week
-Home_Team	Home team
-Away_Team	Away team
-Venue	Match venue
-Attendance	Match attendance
+```python
+data.columns
+```
 
-#🔎 Exploratory Data Analysis
+```python
+data.info()
+```
 
-The project follows a structured analytical approach.
+---
 
-The analysis starts with understanding the dataset and then moves toward player-level performance analysis.
+## 🧹 Data Quality Check
 
-#1️⃣ Dataset Overview
-Question
+Missing values and duplicate records were checked to ensure the dataset was suitable for analysis.
 
-Explore the Arsenal FC dataset and identify:
+```python
+data.isnull().sum()
+```
 
-Total number of rows
-Total number of columns
-Column names
-Data types
-General dataset structure
-Purpose
+```python
+data.duplicated().sum()
+```
 
-This step provides an initial understanding of the dataset before performing further analysis.
+---
 
-#2️⃣ Data Quality Check
-Question
+## ⚽ Player Performance Analysis
 
-Check the dataset for:
+This project analyzes Arsenal players based on their attacking, defensive, shooting, discipline, and playing-time statistics.
 
-Missing values
-Duplicate records
-Potential data quality issues
-Purpose
+### 1. Top Goal Scorers
 
-Data quality checking is an important part of any data analysis project because incorrect or incomplete data can affect analytical results.
+Identify the top Arsenal players based on total goals scored.
 
-#3️⃣ Top Goal Scorers ⚽
-Question
+```python
+top_goal_scorers = (
+    data.groupby("Player")["Goals"]
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+)
 
-Identify the Top 5 Arsenal players based on their total number of goals.
+top_goal_scorers
+```
 
-Analysis
+---
 
-The data was grouped by player and total goals were calculated.
+### 2. Top Assist Providers
 
-Formula
-Total Goals = Sum of Goals
-Result
+Identify the players with the highest number of assists.
 
-The leading goal scorers identified in the analysis include:
+```python
+top_assist_providers = (
+    data.groupby("Player")["Assists"]
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+)
 
-Rank	Player	Goals
-1	Viktor Gyökeres	14
-2	Bukayo Saka	7
-3	Eberechi Eze	7
-4	Leandro Trossard	6
-5	Martín Zubimendi	5
-#4️⃣ Top Assist Providers 🎯
-Question
+top_assist_providers
+```
 
-Identify the Top 5 Arsenal players based on total assists.
+---
 
-Analysis
+### 3. Player Position Analysis
 
-Players were grouped and their total assists were calculated.
+Analyze the different positions represented in the dataset.
 
-Formula
-Total Assists = Sum of Assists
+```python
+player_positions = data[["Player", "Position"]].drop_duplicates()
 
-The analysis highlights the players who contributed most directly to Arsenal's goal creation.
+player_positions
+```
 
-#5️⃣ Player Position Analysis
-Question
+---
 
-Analyze the different player positions represented in the dataset.
+### 4. Goal Contribution
 
-The analysis was performed using the Position and Player columns.
+Goal Contribution is calculated as:
 
-Purpose
+> **Goal Contribution = Goals + Assists**
 
-This helps understand the positional structure of the Arsenal squad and the number of players associated with each position.
-
-#6️⃣ Goal Contribution Analysis ⚽🎯
-
-A new metric called Goal Contribution was created.
-
-Formula
-Goal Contribution = Goals + Assists
-Python
+```python
 data["Goal Contribution"] = data["Goals"] + data["Assists"]
 
-The players were then ranked according to their total goal contribution.
+top_goal_contributors = (
+    data.groupby("Player")["Goal Contribution"]
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+)
 
-Result
+top_goal_contributors
+```
 
-Some of the highest goal contributors include:
+---
 
-Player	Goal Contribution
-Viktor Gyökeres	15
-Bukayo Saka	12
-Leandro Trossard	12
-Declan Rice	9
-Eberechi Eze	9
-#7️⃣ Most Used Players ⏱️
-Question
+### 5. Most Used Players
 
-Identify the players with the highest total number of minutes played.
+Identify the players with the highest total playing minutes.
 
-Formula
-Total Minutes = Sum of Minutes
-Purpose
+```python
+most_used_players = (
+    data.groupby("Player")["Minutes"]
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+)
 
-This analysis identifies the players who were most heavily involved in Arsenal's matches during the season.
+most_used_players
+```
 
-The analysis includes both outfield players and goalkeepers where applicable.
+---
 
-#8️⃣ Shooting Performance Analysis 🎯
-Question
+### 6. Shooting Performance Analysis
 
-Analyze player shooting performance using:
+Analyze total shots, shots on target, and goals for each player.
 
-Goals
-Shots
-Shots on Target
-Analysis
-
-The data was grouped by player and the total values for the shooting statistics were calculated.
-
-Example
-Shooting_performance = (
+```python
+shooting_performance = (
     data.groupby("Player")[["Goals", "Shots_On_Target", "Shots"]]
     .sum()
     .sort_values(by="Goals", ascending=False)
 )
-Purpose
 
-This analysis helps identify:
+shooting_performance.head(10)
+```
 
-High-volume shooters
-Accurate shooters
-Efficient attackers
-Players who contribute most to Arsenal's attacking threat
-#9️⃣ Shooting Accuracy 🎯
+---
 
-A new metric called Shooting Accuracy was created.
+### 7. Shooting Accuracy
 
-Formula
-Shooting Accuracy =
-(Shots on Target / Total Shots) × 100
-Python
-data["shooting_accuracy"] = (
-    data["Shots_On_Target"] / data["Shots"] * 100
+Shooting Accuracy is calculated using:
+
+> **Shooting Accuracy = (Shots on Target / Shots) × 100**
+
+```python
+data["Shooting_Accuracy"] = np.where(
+    data["Shots"] > 0,
+    data["Shots_On_Target"] / data["Shots"] * 100,
+    np.nan
 )
 
-Players were then ranked based on their shooting accuracy.
+data[["Player", "Shooting_Accuracy"]].head()
+```
 
-Special consideration was given to cases where the number of shots was zero to avoid invalid calculations.
+---
 
-Purpose
+### 8. Goals per 90 Minutes
 
-Shooting accuracy helps measure how frequently a player's shots are actually on target.
+Goals per 90 minutes measures scoring efficiency based on playing time.
 
-#🔟 Goals per 90 Minutes ⚽
-Question
+> **Goals per 90 = (Goals / Minutes) × 90**
 
-Calculate player scoring efficiency using goals per 90 minutes.
+```python
+player_goals_minutes = (
+    data.groupby("Player")[["Goals", "Minutes"]]
+    .sum()
+)
 
-Formula
-Goals per 90 Minutes =
-(Goals / Minutes) × 90
-Purpose
+player_goals_minutes["Goals_Per_90"] = (
+    player_goals_minutes["Goals"]
+    / player_goals_minutes["Minutes"]
+    * 90
+)
 
-This metric allows players with different amounts of playing time to be compared more fairly.
+player_goals_minutes.sort_values(
+    by="Goals_Per_90",
+    ascending=False
+).head(10)
+```
 
-For example, a player with fewer total goals but significantly fewer minutes may have a higher goals-per-90 rate.
+---
 
-#1️⃣1️⃣ Defensive Performance 🛡️
+### 9. Defensive Performance
 
-A new metric called Defensive Contribution was created.
+Defensive Contribution is calculated as:
 
-Formula
-Defensive Contribution =
-Tackles Won + Interceptions
-Python
+> **Defensive Contribution = Tackles Won + Interceptions**
+
+```python
 data["Defensive_Contribution"] = (
     data["Tackles_Won"] + data["Interceptions"]
 )
 
-Players were then ranked according to their total defensive contribution.
-
-Purpose
-
-This analysis identifies players who contributed strongly to defensive actions.
-
-#1️⃣2️⃣ Discipline Analysis 🟨🟥
-
-Player discipline was analyzed using:
-
-Yellow Cards
-Red Cards
-Fouls Committed
-Python
-player_discipline = (
-    data.groupby("Player")
-    [["Yellow_Cards", "Red_Cards", "Fouls_Committed"]]
+top_defensive_players = (
+    data.groupby("Player")["Defensive_Contribution"]
     .sum()
+    .sort_values(ascending=False)
+    .head(10)
 )
 
-Separate rankings were created for:
+top_defensive_players
+```
 
-Players with the most yellow cards
-Players with the most red cards
-Players committing the most fouls
-Purpose
+---
 
-This analysis helps understand player disciplinary patterns.
+### 10. Discipline Analysis
 
-#1️⃣3️⃣ Position-wise Performance Analysis
-Question
+Analyze yellow cards, red cards, and fouls committed by Arsenal players.
+
+```python
+player_discipline = (
+    data.groupby("Player")[
+        ["Yellow_Cards", "Red_Cards", "Fouls_Committed"]
+    ]
+    .sum()
+    .sort_values(
+        by="Yellow_Cards",
+        ascending=False
+    )
+)
+
+player_discipline.head(10)
+```
+
+---
+
+### 11. Position-wise Performance
 
 Analyze player performance according to their positions.
 
-The analysis focuses on performance metrics such as:
+```python
+position_performance = (
+    data.groupby("Position")[
+        [
+            "Goals",
+            "Assists",
+            "Shots",
+            "Tackles_Won",
+            "Interceptions",
+            "Minutes"
+        ]
+    ]
+    .mean()
+)
 
-Goals
-Assists
-Shots
-Tackles Won
-Interceptions
-Minutes
-Purpose
+position_performance
+```
 
-The objective is to understand how different positions contribute to different aspects of Arsenal's overall performance.
+---
 
-For example:
+### 12. Match Week Performance
 
-Forwards are generally more involved in goals and shots
-Midfielders contribute to both attacking and defensive actions
-Defenders contribute more strongly through tackles and interceptions
-#1️⃣4️⃣ Match Week Performance 📅
-Question
+Analyze Arsenal's performance across different match weeks.
 
-Analyze Arsenal's performance across different Premier League match weeks.
-
-The analysis includes:
-
-Goals
-Assists
-Shots
-
-A custom metric called Total_Performance was also created.
-
-Formula
-Total Performance =
-Goals + Assists + Shots
-Python
+```python
 match_week_performance = (
-    data.groupby("Match_Week")[["Goals", "Assists", "Shots"]]
+    data.groupby("Match_Week")[
+        ["Goals", "Assists", "Shots"]
+    ]
     .sum()
 )
 
@@ -367,99 +331,76 @@ match_week_performance = (
         ascending=False
     )
 )
-Highest-Ranked Match Weeks
 
-According to the custom Total_Performance metric, some of the highest-performing match weeks include:
+match_week_performance
+```
 
-Match Week	Goals	Assists	Shots	Total Performance
-30	2	2	25	29
-19	4	3	22	29
-2	5	4	18	27
-27	4	2	20	26
-18	1	1	24	26
-12	4	4	17	25
-Purpose
+---
 
-This analysis helps identify the match weeks in which Arsenal players collectively produced the strongest attacking output according to the project's custom metric.
+### 13. Home vs Away Performance
 
-#1️⃣5️⃣ Home vs Away Performance 🏠✈️
-Question
+Classify matches as Home or Away and compare player performance.
 
-Separate Arsenal's matches into:
-
-Home Matches
-Away Matches
-
-Then compare player performance between the two match types.
-
-The analysis includes:
-
-Goals
-Assists
-Shots
-Minutes
-Match Classification
-
-A new column called Match_Type was created.
-
+```python
 data["Match_Type"] = data.apply(
-    lambda row:
-    "Home" if "Arsenal" in str(row["Home_Team"])
+    lambda row: "Home"
+    if "Arsenal" in str(row["Home_Team"])
     else "Away",
     axis=1
 )
-Explanation
+```
 
-The logic checks whether Arsenal appears in the Home_Team column.
-
-If Arsenal is the home team:
-
-Home
-
-Otherwise:
-
-Away
-Player-wise Analysis
+```python
 player_home_away = (
     data.groupby(
         ["Player", "Match_Type"]
-    )[["Goals", "Assists", "Shots", "Minutes"]]
+    )[
+        ["Goals", "Assists", "Shots", "Minutes"]
+    ]
     .sum()
     .reset_index()
 )
-Purpose
 
-This analysis helps determine whether individual players performed differently in:
+player_home_away
+```
 
-Home matches
-Away matches
-#1️⃣6️⃣ Attendance Analysis 👥
-Question
+---
 
-Analyze match attendance data.
+### 14. Attendance Analysis
 
-The analysis includes:
+Analyze match attendance and identify venues with the highest average attendance.
 
-Maximum attendance
-Minimum attendance
-Average attendance
-Venue with the highest average attendance
-Purpose
+```python
+max_attendance = data["Attendance"].max()
+min_attendance = data["Attendance"].min()
+average_attendance = data["Attendance"].mean()
 
-Attendance analysis provides additional insight into match-level information and stadium audience patterns.
+print("Maximum Attendance:", max_attendance)
+print("Minimum Attendance:", min_attendance)
+print("Average Attendance:", average_attendance)
+```
 
-#1️⃣7️⃣ Player Performance Score 🏆
+```python
+venue_attendance = (
+    data.groupby("Venue")["Attendance"]
+    .mean()
+    .sort_values(ascending=False)
+)
 
-A custom Performance Score was developed to evaluate players using multiple statistical categories.
+venue_attendance
+```
 
-Formula
-Performance Score =
-(Goals × 5)
-+ (Assists × 3)
-+ Shots on Target
-+ Tackles Won
-+ Interceptions
-Python
+---
+
+## 🏆 Custom Performance Score
+
+A custom Performance Score was created to evaluate players using multiple statistical categories.
+
+### Formula
+
+> **Performance Score = (Goals × 5) + (Assists × 3) + Shots on Target + Tackles Won + Interceptions**
+
+```python
 player_performance = (
     data.groupby("Player")[
         [
@@ -488,487 +429,305 @@ player_performance = (
         ascending=False
     )
 )
-Top Performance Scores
-Rank	Player	Performance Score
-1	Martín Zubimendi	115
-2	Declan Rice	114
-3	Bukayo Saka	112
-4	Viktor Gyökeres	101
-5	Jurriën Timber	96
-6	Leandro Trossard	87
-7	Eberechi Eze	83
-8	Gabriel Magalhães	76
-9	Piero Hincapié	65
-10	Mikel Merino	59
-Important Note
 
-This is a custom analytical score created specifically for this project.
+player_performance
+```
 
-It is not an official football rating system.
+---
 
-#1️⃣8️⃣ Underrated Player Analysis 🔍
-Question
+## 💎 Underrated Player Analysis
 
-Identify players who:
+Players with relatively lower playing minutes but strong goal contributions per 90 minutes were analyzed.
 
-Played relatively fewer minutes
-Produced a relatively high goal contribution per 90 minutes
-Goal Contribution per 90 Formula
-Goal Contribution per 90 =
-(Goals + Assists) / Minutes × 90
-Python
-player_performance = (
-    data.groupby("Player")
-    [["Goals", "Assists", "Minutes"]]
+```python
+underrated_analysis = (
+    data.groupby("Player")[
+        ["Goals", "Assists", "Minutes"]
+    ]
     .sum()
 )
 
-player_performance["Goal_Contribution"] = (
-    player_performance["Goals"]
-    + player_performance["Assists"]
+underrated_analysis["Goal_Contribution"] = (
+    underrated_analysis["Goals"]
+    + underrated_analysis["Assists"]
 )
 
-player_performance["Goal_Contribution_per_90"] = (
-    player_performance["Goal_Contribution"]
-    / player_performance["Minutes"]
+underrated_analysis["Goal_Contribution_per_90"] = (
+    underrated_analysis["Goal_Contribution"]
+    / underrated_analysis["Minutes"]
     * 90
 )
 
-Players were filtered using the following minutes range:
+underrated_players = (
+    underrated_analysis[
+        (underrated_analysis["Minutes"] < 1000)
+        & (underrated_analysis["Minutes"] >= 500)
+    ]
+    .sort_values(
+        by="Goal_Contribution_per_90",
+        ascending=False
+    )
+)
 
-Minutes >= 500
-Minutes < 1000
+underrated_players
+```
 
-This helps avoid focusing on players with extremely small sample sizes.
+---
 
-Purpose
+## 📈 Correlation Analysis
 
-The analysis attempts to identify players whose contribution may be understated when looking only at total goals or assists.
+Correlation analysis is used to understand relationships between numerical variables in the dataset.
 
-#1️⃣9️⃣ Correlation Analysis 📈
-Question
+```python
+numeric_data = data.select_dtypes(
+    include=["int64", "float64"]
+)
 
-Create a correlation analysis using numerical variables and identify which variables are most strongly related to goals.
+correlation = numeric_data.corr()
+```
 
-Purpose
+### Correlation Heatmap
 
-Correlation analysis helps understand relationships between different performance variables.
+```python
+plt.figure(figsize=(14, 10))
 
-Examples of variables analyzed include:
+sns.heatmap(
+    correlation,
+    annot=True,
+    cmap="coolwarm",
+    fmt=".2f"
+)
 
-Goals
-Assists
-Shots
-Shots on Target
-Tackles Won
-Interceptions
-Minutes
-Other numerical statistics
-Visualization
+plt.title("Correlation Heatmap")
+plt.show()
+```
 
-A correlation heatmap was used to visually represent relationships between numerical variables.
+---
 
-A value closer to:
+# 🏟️ Arsenal Statistical Dream XI
 
-+1
+A statistical Dream XI can be created by considering player performance across different positions.
 
-indicates a strong positive relationship.
+### Formation
 
-A value closer to:
+**4-3-3**
 
--1
+```text
+                    Goalkeeper
 
-indicates a strong negative relationship.
+Right Back     Center Back     Center Back     Left Back
 
-A value around:
+             Central Midfielder
+        Central Midfielder    Attacking Midfielder
 
-0
+       Right Wing     Striker     Left Wing
+```
 
-indicates a weak or negligible linear relationship.
+The Dream XI selection considers:
 
-#2️⃣0️⃣ Arsenal Statistical Dream XI 🏆
-Question
+- Goals
+- Assists
+- Goal Contribution
+- Minutes Played
+- Shooting Performance
+- Defensive Contribution
+- Performance Score
+- Player Position
 
-Build a statistical Arsenal Dream XI using a:
+---
 
-4-3-3 Formation
+# 📊 Key Findings
 
-The player selection is based on statistical performance rather than personal preference.
+Based on the analysis, several important observations were identified:
 
-Selection Criteria
+- Viktor Gyökeres was one of the strongest attacking performers.
+- Bukayo Saka contributed significantly through both goals and assists.
+- Leandro Trossard showed strong attacking contribution.
+- Declan Rice and Martín Zubimendi provided significant overall contributions.
+- Several defenders demonstrated strong defensive contributions through tackles and interceptions.
+- Playing minutes helped identify the most regularly used players.
+- Shooting statistics provided insights into attacking efficiency.
+- Home and Away analysis allowed comparison of player performance in different match conditions.
+- Attendance analysis provided insights into stadium and match attendance patterns.
+- The custom Performance Score helped compare players using multiple statistical categories.
 
-The analysis considers:
+---
 
-Goals
-Assists
-Goal Contribution
-Defensive Contribution
-Minutes
-Player Position
-Overall Performance Score
-Formation
-                 ST
-           
-       LW                  RW
+# 🛠️ Technologies Used
 
-            CM      CM
-                 DM
+- **Python**
+- **Pandas**
+- **NumPy**
+- **Matplotlib**
+- **Seaborn**
+- **Jupyter Notebook**
+- **GitHub**
 
-       LB     CB     CB     RB
+---
 
-                 GK
-Important Note
+# 📂 Project Structure
 
-The Dream XI is a statistical selection based on the available dataset.
-
-It should not be interpreted as an official Arsenal starting XI or a subjective football ranking.
-
-📊 Key Findings
-
-The analysis produced several interesting findings from the dataset.
-
-⚽ Leading Goal Scorer
-
-Viktor Gyökeres recorded the highest number of goals in the analyzed data with:
-
-14 Goals
-#🎯 Goal Contribution
-
-Viktor Gyökeres also recorded the highest goal contribution:
-
-15 Goal Contributions
-
-based on:
-
-Goals + Assists
-🏹 Attacking Performance
-
-Bukayo Saka, Eberechi Eze, Leandro Trossard, Viktor Gyökeres and other attacking players contributed significantly to Arsenal's attacking output.
-
-#🛡️ Defensive Contribution
-
-The custom defensive contribution metric:
-
-Tackles Won + Interceptions
-
-highlighted players such as:
-
-Martín Zubimendi
-Declan Rice
-Jurriën Timber
-Piero Hincapié
-Gabriel Magalhães
-#🏆 Performance Score
-
-The custom performance score identified Martín Zubimendi as the highest-rated player according to the project's statistical scoring model.
-
-His score was:
-
-115
-
-followed by:
-
-Declan Rice – 114
-Bukayo Saka – 112
-Viktor Gyökeres – 101
-Jurriën Timber – 96
-📈 Match Week Insights
-
-The match-week analysis identified several highly productive match weeks.
-
-The highest Total_Performance values were:
-
-Match Week 30 → 29
-Match Week 19 → 29
-Match Week 2  → 27
-Match Week 27 → 26
-Match Week 18 → 26
-Match Week 12 → 25
-
-The Total_Performance metric combines:
-
-Goals + Assists + Shots
-#🧮 Custom Metrics Created
-
-Several custom analytical metrics were created throughout the project.
-
-Goal Contribution
-Goal Contribution = Goals + Assists
-Shooting Accuracy
-Shooting Accuracy =
-(Shots on Target / Shots) × 100
-Goals per 90
-Goals per 90 =
-(Goals / Minutes) × 90
-Defensive Contribution
-Defensive Contribution =
-Tackles Won + Interceptions
-Goal Contribution per 90
-Goal Contribution per 90 =
-(Goals + Assists) / Minutes × 90
-Performance Score
-Performance Score =
-(Goals × 5)
-+ (Assists × 3)
-+ Shots on Target
-+ Tackles Won
-+ Interceptions
-Match Week Total Performance
-Total Performance =
-Goals + Assists + Shots
-
-#🧠 Skills Demonstrated
-
-This project demonstrates practical knowledge of several important data analysis concepts.
-
-🐍 Python
-Variables
-Data types
-Conditional logic
-Lambda functions
-Functions
-Basic calculations
-Data manipulation
-🐼 Pandas
-read_csv()
-DataFrame
-groupby()
-sum()
-mean()
-min()
-max()
-sort_values()
-head()
-drop_duplicates()
-reset_index()
-pivot()
-apply()
-select_dtypes()
-Boolean filtering
-Creating calculated columns
-#🔢 NumPy
-
-NumPy was used for numerical operations and handling calculations such as shooting accuracy.
-
-#📊 Data Visualization
-
-The project uses:
-
-Matplotlib
-Seaborn
-Correlation heatmaps
-Statistical visualizations
-#📈 Data Analysis
-
-The project demonstrates:
-
-Exploratory Data Analysis
-Data aggregation
-Data filtering
-Ranking
-Comparative analysis
-Statistical analysis
-Feature creation
-Correlation analysis
-Performance evaluation
-#📁 Project Structure
-Arsenal-FC-Data-Analysis/
-│
-├── Arsenal.ipynb
+```text
+Arsenal-FC-Player-Performance-Analysis/
 │
 ├── Arsenal.csv
 │
-└── README.md
-📓 Arsenal.ipynb
+├── Arsenal.ipynb
+│
+├── README.md
+│
+└── images/
+    └── analysis-results.png
+```
 
-The Jupyter Notebook contains the complete analysis.
+---
 
-It includes:
+# 🚀 How to Run the Project
 
-Dataset exploration
-Data cleaning/checking
-Player analysis
-Statistical calculations
-Custom metrics
-Performance rankings
-Home vs away analysis
-Match-week analysis
-Correlation analysis
-Player performance evaluation
-📄 Arsenal.csv
+### 1. Clone the Repository
 
-The CSV file contains the raw Arsenal FC player and match statistics used throughout the project.
-
-#📘 README.md
-
-This file provides an overview of the project, methodology, analytical questions, findings, technologies and project structure.
-
-🚀 How to Run the Project
-Step 1: Clone the Repository
+```bash
 git clone YOUR_GITHUB_REPOSITORY_URL
-Step 2: Navigate to the Project Directory
-cd Arsenal-FC-Data-Analysis
-Step 3: Install Required Libraries
+```
+
+### 2. Navigate to the Project Folder
+
+```bash
+cd Arsenal-FC-Player-Performance-Analysis
+```
+
+### 3. Install Required Libraries
+
+```bash
 pip install pandas numpy matplotlib seaborn jupyter
-Step 4: Start Jupyter Notebook
+```
+
+### 4. Open Jupyter Notebook
+
+```bash
 jupyter notebook
-Step 5: Open the Notebook
+```
+
+### 5. Open the Notebook
 
 Open:
 
+```text
 Arsenal.ipynb
+```
 
-Then run the notebook cells sequentially.
+Then run the cells sequentially.
 
-#🔄 Reproducibility
+---
 
-To reproduce the analysis:
+# 📌 Project Objectives
 
-Download or clone the repository.
-Make sure Arsenal.csv is located in the correct project directory.
-Install the required Python libraries.
-Open Arsenal.ipynb.
-Run the notebook cells from top to bottom.
-⚠️ Analytical Notes & Limitations
+The main objectives of this project are:
 
-This project is primarily an exploratory data analysis project.
+- Analyze Arsenal FC player performance.
+- Identify top goal scorers.
+- Identify top assist providers.
+- Measure goal contributions.
+- Analyze player playing time.
+- Evaluate shooting performance.
+- Calculate shooting accuracy.
+- Calculate goals per 90 minutes.
+- Analyze defensive contributions.
+- Analyze player discipline.
+- Compare home and away performance.
+- Analyze match-week performance.
+- Analyze attendance patterns.
+- Develop a custom player performance score.
+- Identify potentially underrated players.
+- Analyze statistical correlations.
+- Build a statistical Dream XI.
 
-Some of the metrics used in the project are custom metrics created for analytical purposes.
+---
 
-For example:
+# 🧠 Skills Demonstrated
 
-Performance Score
+Through this project, the following practical skills were developed:
 
-and
+- Data Loading
+- Data Cleaning
+- Data Exploration
+- Data Aggregation
+- GroupBy Operations
+- Sorting and Filtering
+- Feature Engineering
+- Statistical Analysis
+- Performance Metrics
+- Correlation Analysis
+- Data Visualization
+- Pandas Data Manipulation
+- NumPy Operations
+- Matplotlib Visualization
+- Seaborn Visualization
+- Analytical Thinking
 
-Total Performance
+---
 
-are not official football statistics.
+# 📚 Learning Outcomes
 
-Similarly, a high correlation does not necessarily mean that one variable causes another.
+This project helped develop practical experience in:
 
-The results should therefore be interpreted within the context of the available dataset.
+- Working with real-world sports data.
+- Understanding structured datasets.
+- Performing exploratory data analysis.
+- Creating custom analytical metrics.
+- Comparing player performance.
+- Using Pandas for data aggregation.
+- Using NumPy for numerical calculations.
+- Creating statistical visualizations.
+- Interpreting correlations.
+- Turning raw data into meaningful insights.
 
-#🔮 Future Improvements
+---
 
-This project can be further developed by adding more advanced football analytics.
+# 🔮 Future Improvements
 
-Potential improvements include:
+Possible improvements for this project include:
 
-Expected Goals (xG)
-Expected Assists (xA)
-Progressive Passes
-Progressive Carries
-Key Passes
-Chances Created
-Pass Completion Rate
-Defensive Duels
-Aerial Duels
-Ball Recoveries
-Player Percentile Rankings
-Advanced player rating models
-Machine Learning-based player evaluation
-Interactive Power BI dashboard
-Interactive Tableau dashboard
-Comparison with other Premier League teams
-Multi-season performance analysis
-Automated player scouting system
-Statistical player recommendation system
-#💡 Possible Future Dashboard
+- Adding expected goals (**xG**).
+- Adding expected assists (**xA**).
+- Adding progressive passes.
+- Adding key passes.
+- Adding possession-based statistics.
+- Building an interactive dashboard.
+- Creating player comparison visualizations.
+- Adding team-level analysis.
+- Developing a more advanced player rating system.
+- Creating a machine learning model for player performance prediction.
 
-The analysis can later be transformed into an interactive dashboard using:
+---
 
-Power BI
-Tableau
-Excel
+# ⭐ Conclusion
 
-A dashboard could include:
+This project demonstrates how Python can be used to analyze football data and extract meaningful insights from raw match statistics.
 
-Player Overview
-      ↓
-Attacking Performance
-      ↓
-Defensive Performance
-      ↓
-Shooting Analysis
-      ↓
-Home vs Away
-      ↓
-Match Week Trends
-      ↓
-Player Comparison
-      ↓
-Dream XI
-🎓 Learning Outcomes
+By using **Pandas, NumPy, Matplotlib, and Seaborn**, the project covers different aspects of Arsenal FC player performance, including attacking contribution, shooting, defending, discipline, playing time, match performance, and statistical relationships.
 
-Through this project, I developed practical experience in working with sports performance data and converting analytical questions into Python-based solutions.
+The project also demonstrates practical skills in **data analysis, feature engineering, statistical analysis, and data visualization**.
 
-The major learning outcomes include:
+---
 
-Understanding real-world datasets
-Performing exploratory data analysis
-Working with Pandas DataFrames
-Filtering and grouping data
-Aggregating player statistics
-Creating calculated columns
-Designing custom performance metrics
-Comparing players
-Ranking players
-Analyzing attacking statistics
-Analyzing defensive statistics
-Analyzing player discipline
-Comparing home and away performances
-Working with match-week data
-Performing correlation analysis
-Creating statistical visualizations
-Building a complete end-to-end data analysis project
+# 👨‍💻 Author
 
-#📌 Conclusion
+**MD Nur Hossain Joy**
 
-This Arsenal FC Player Performance Analysis project demonstrates how Python and Pandas can be used to transform raw football statistics into meaningful analytical insights.
+Aspiring Data Analyst | Python | SQL | Excel | Power BI | Tableau
 
-The project covers the complete analytical workflow:
+---
 
-Raw Dataset
-     ↓
-Data Understanding
-     ↓
-Data Quality Check
-     ↓
-Data Transformation
-     ↓
-Exploratory Data Analysis
-     ↓
-Custom Metrics
-     ↓
-Player Performance Analysis
-     ↓
-Comparative Analysis
-     ↓
-Correlation Analysis
-     ↓
-Statistical Insights
+# 📬 Connect With Me
 
-The analysis provides a structured view of Arsenal's player performance from multiple perspectives, including attacking contribution, defensive contribution, shooting efficiency, playing time, discipline, match-week performance and home/away performance.
+- **GitHub:** [YOUR_GITHUB_PROFILE_LINK](https://github.com/nurhossainjoy)
+- **LinkedIn:** [YOUR_LINKEDIN_PROFILE_LINK](https://www.linkedin.com/in/md-nur-hossain-joy-0b0bb9190/)
 
-#👨‍💻 Author
-MD Nur Hossain Joy
+---
 
-Aspiring Data Analyst / Data Scientist
+# ⭐ Support
 
-Technical Interests
-Python
-Pandas
-NumPy
-SQL
-PostgreSQL
-Excel
-Power BI
-Tableau
-Data Visualization
-Exploratory Data Analysis
-Machine Learning
-🌐 Connect With Me
-GitHub: https://github.com/nurhossainjoy
-LinkedIn: https://www.linkedin.com/in/md-nur-hossain-joy-0b0bb9190/
-Email: nurhossainjoy4456@gmail.com
+If you find this project useful, please consider giving the repository a ⭐ on GitHub.
+
+Thank you for visiting this project! ⚽📊
