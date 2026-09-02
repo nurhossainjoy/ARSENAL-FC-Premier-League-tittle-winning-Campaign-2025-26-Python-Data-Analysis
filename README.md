@@ -1,8 +1,10 @@
 # ⚽ Arsenal FC – Premier League Player Performance Analysis
 
 ## 📌 Project Overview
+![Arsenal FC Premier League Campaign]([./Photos/GettyImages-2278096759-scaled-e1779832513831.jp](https://github.com/nurhossainjoy/ARSENAL-FC-Premier-League-tittle-winning-Campaign-2025-26/edit/main/README.md))
 
 This project is solely made to showcase the author's love, admiration and emotion towards the EPL Club ARSENAL FC. The club won the Premier league after 22 years and the author is not gonna hold himself back from demonstrating how much he loves the club. This project is a simple metaphor of love toward the club. "North London Forever. Whatever the weather."
+
 This project presents an exploratory data analysis (EDA) of Arsenal FC's Premier League player and match performance data using **Python, Pandas, NumPy, Matplotlib, and Seaborn**.
 
 The project focuses on analyzing player performance, attacking and defensive contributions, shooting efficiency, discipline, match-week performance, home vs away performance, attendance, and other statistical aspects of Arsenal's Premier League campaign.
