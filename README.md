@@ -1,7 +1,7 @@
 # ⚽ Arsenal FC – Premier League Player Performance Analysis
 
 ## 📌 Project Overview
-![Arsenal Photo]([[https://github.com/nurhossainjoy/English-Premier-League-Football-2025-26-Season-SQL-Analysis/blob/main/Photos/blt9f60f33d463aa9b3.webp](https://github.com/nurhossainjoy/ARSENAL-FC-Premier-League-tittle-winning-Campaign-2025-26/edit/main/README.md)](https://github.com/nurhossainjoy/ARSENAL-FC-Premier-League-tittle-winning-Campaign-2025-26/blob/main/Photos/GettyImages-2278096759-scaled-e1779832513831.jpg))
+![Premier League_Photo](https://github.com/nurhossainjoy/ARSENAL-FC-Premier-League-tittle-winning-Campaign-2025-26/blob/main/Photos/i.jpg)
 
 This project is solely made to showcase the author's love, admiration and emotion towards the EPL Club ARSENAL FC. The club won the Premier league after 22 years and the author is not gonna hold himself back from demonstrating how much he loves the club. This project is a simple metaphor of love toward the club. "North London Forever. Whatever the weather."
 
