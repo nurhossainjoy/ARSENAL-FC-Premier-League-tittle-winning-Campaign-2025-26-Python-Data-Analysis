@@ -1,4 +1,4 @@
-# ⚽ Arsenal FC – Premier League Player Performance Analysis
+# ⚽ Arsenal FC – Premier League 2025-26 Season Player Performance Analysis using Python
 
 ## 📌 Project Overview
 ![Premier League_Photo](Photos/GettyImages-2278096759-scaled-e1779832513831.jpg)
